@@ -1,0 +1,524 @@
+/* =====================================================================
+   styles.css  -  Akolurejo Victor Tobi portfolio
+   HTML + CSS only (no JavaScript).
+   Table of contents (About tabs = About / Skills logo cards / Education)
+     1. Variables (colours, fonts)     7. Statement banner
+     2. Reset & base                   8. Resume
+     3. Shared section title           9. Portfolio
+     4. Top bar & menu                10. Contact
+     5. Hero (+ typing headline)      11. Site footer
+     6. About (+ tabs)                12. Scroll effects & responsive
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. VARIABLES
+   Change a colour here and it changes everywhere on the page.
+   ===================================================================== */
+:root {
+  --bg: #120d0a;            /* page background (warm black) */
+  --bar: #1d140f;           /* dark panels / solid top bar */
+  --orange: #ff7d2b;        /* main accent */
+  --amber: #f6840a;         /* softer accent (links, active menu) */
+  --ink: #1d140f;           /* dark text on white sections */
+  --muted: #6f655e;         /* grey-brown secondary text */
+  --ghost: #e4dfdb;         /* big faded words behind titles */
+  --light: rgba(255, 243, 234, 0.96); /* light text on dark */
+  --font-body: "Russo One", "Arial Black", system-ui, sans-serif;
+  --font-display: "Saira Stencil One", "Russo One", Impact, sans-serif;
+  --bar-height: 75px;
+}
+/* END 1. VARIABLES */
+
+
+/* =====================================================================
+   2. RESET & BASE
+   Removes browser default spacing so every size is under our control.
+   ===================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;                 /* menu links glide to the section */
+  scroll-padding-top: var(--bar-height);   /* stops sections hiding under the bar */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p { margin: 0; font-weight: 400; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+/* Every big block is positioned so children can sit inside it; overflow-x
+   is clipped so nothing can create a sideways scroll bar. */
+.hero, .about, .banner, .resume, .portfolio, .contact { position: relative; overflow-x: clip; }
+
+/* Small outline icons (inline SVG) */
+.svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* END 2. RESET & BASE */
+
+
+/* =====================================================================
+   3. SHARED SECTION TITLE
+   Every section starts with: icon, orange line, big faded word with the
+   real title on top of it, then a small sentence.
+   ===================================================================== */
+.section-title { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 70px 20px 0; }
+.section-title__icon { display: grid; place-items: center; height: 46px; color: #6f655e; }
+.section-title__icon .svg { width: 34px; height: 34px; }
+.section-title__line { width: 2px; height: 46px; margin-top: 10px; background: var(--orange); }
+.section-title__stack { position: relative; display: grid; place-items: center; margin-top: 4px; }
+.section-title__ghost { font-family: var(--font-display); font-size: clamp(34px, 7.6vw, 100px); line-height: 1; color: var(--ghost); white-space: nowrap; user-select: none; }
+.section-title__text { position: absolute; font-size: clamp(18px, 2.1vw, 28px); color: var(--ink); white-space: nowrap; }
+.section-title__sub { margin-top: 8px; font-size: 16px; color: var(--muted); max-width: 640px; }
+/* END 3. SHARED SECTION TITLE */
+
+
+/* =====================================================================
+   4. TOP BAR & MENU
+   Fixed to the top. Transparent over the hero, solid once you scroll
+   (the scroll effect itself lives in section 12).
+   ===================================================================== */
+.topbar { position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--bar-height); background: var(--bar); }
+.topbar__inner { height: 100%; max-width: 1568px; margin: 0 auto; padding: 0 6%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+/* Logo + name */
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand__logo { height: 50px; width: auto; filter: drop-shadow(0 0 10px rgba(255, 125, 43, 0.35)); }   /* transparent PNG: no circle crop needed */
+.brand__text { display: flex; flex-direction: column; }
+.brand__name { font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
+.brand__role { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 243, 234, 0.7); margin-top: 3px; }
+
+/* Links */
+.menu { display: flex; gap: 48px; }
+.menu__link { font-size: 17px; color: #fff; transition: color 0.2s ease; }
+.menu__link:hover { color: var(--orange); }
+
+/* Mobile-menu helpers: the checkbox is invisible, the label is the burger button */
+.menu-check { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.menu-button { display: none; cursor: pointer; color: #fff; padding: 6px; }
+.menu-button .svg { width: 28px; height: 28px; }
+.menu-check:focus-visible + .menu-button { outline: 3px solid var(--orange); outline-offset: 2px; }
+/* END 4. TOP BAR & MENU */
+
+
+/* =====================================================================
+   5. HERO
+   Layers (bottom to top): photo -> rays -> shade -> grain -> text.
+   ===================================================================== */
+.hero { min-height: 100vh; min-height: 100svh; background: #0b0806; isolation: isolate; }
+
+/* Layer 1: the cinematic portrait, slowly zooming. object-position keeps
+   his face visible on narrow screens. */
+.hero__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% center; z-index: -4; animation: kenburns 18s ease-in-out infinite alternate; }
+@keyframes kenburns {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.12) translate(-1.5%, -1%); }
+}
+
+/* Layer 2: warm light rays drifting across the right side */
+.hero__rays { position: absolute; top: 0; right: 0; width: 60%; height: 100%; z-index: -3; mix-blend-mode: screen;
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 184, 110, 0.12) 35%, rgba(255, 125, 43, 0.2) 50%, transparent 70%);
+  animation: drift 12s ease-in-out infinite alternate; }
+@keyframes drift {
+  from { transform: translateX(0) skewX(-8deg); }
+  to   { transform: translateX(-5%) skewX(-12deg); }
+}
+
+/* Layer 3: dark vignette so the text is always readable */
+.hero__shade { position: absolute; inset: 0; z-index: -2;
+  background:
+    linear-gradient(to right, transparent 35%, rgba(8, 5, 3, 0.55) 100%),
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0.75) 100%),
+    linear-gradient(to top, rgba(8, 8, 10, 0.85) 0%, transparent 55%); }
+
+/* Layer 4: film grain (an SVG noise image) */
+.hero__grain { position: absolute; inset: 0; z-index: -1; opacity: 0.15; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* Text block: sits on the right half so it never covers his face */
+.hero__content { position: absolute; top: 50%; right: 6%; transform: translateY(-46%); width: min(620px, 46%); color: #fff; text-shadow: 0 6px 24px rgba(0, 0, 0, 0.55); }
+.hero__role { font-size: clamp(13px, 1.2vw, 18px); letter-spacing: 0.22em; text-transform: uppercase; color: var(--orange); }
+.hero__headline { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 82px); line-height: 1.1; margin: 16px 0 18px; }
+.hero__desc { font-size: clamp(13px, 1.1vw, 17px); line-height: 1.8; color: rgba(255, 243, 234, 0.9); max-width: 560px; }
+
+/* Call-to-action button with the two glowing orange notches */
+.hero__button { position: relative; display: inline-flex; align-items: center; justify-content: center; margin-top: 34px; min-width: 280px; height: 62px; padding: 0 30px; border-radius: 30px; background: rgba(40, 28, 20, 0.85); color: #fff; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4); transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; }
+.hero__button::before,
+.hero__button::after { content: ""; position: absolute; left: 50%; width: 36px; height: 6px; transform: translateX(-50%); border-radius: 4px; background: var(--orange); box-shadow: 0 0 14px 4px rgba(255, 125, 43, 0.7); }
+.hero__button::before { top: -2px; }
+.hero__button::after { bottom: -2px; }
+.hero__button:hover { background: var(--orange); color: #1a100a; box-shadow: 0 0 40px 8px rgba(255, 125, 43, 0.5); transform: translateY(-2px); }
+
+.hero__place { margin-top: 26px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 240, 229, 0.8); }
+
+/* ---- Typing headline (pure CSS) ----
+   All four phrases are stacked in the same grid cell. Each one gets a turn:
+   it is revealed left-to-right with clip-path + steps() (= typing), held,
+   then erased. The cycle is 24s, so each phrase owns 6s of it.        */
+.typer { display: grid; justify-items: start; min-height: 1.15em; }
+.type { grid-area: 1 / 1; position: relative; display: inline-block; opacity: 0; clip-path: inset(-10% 100% -10% 0); animation: type-reveal 24s infinite; }
+.type::after { content: ""; position: absolute; top: 6%; left: 0; width: 3px; height: 88%; background: var(--orange); animation: type-caret 24s infinite; }
+/* --n = number of letters (used for steps) ; delay = start of its turn */
+.type--1 { --n: 21; animation-delay: 0s; }
+.type--2 { --n: 9;  animation-delay: 6s; }
+.type--3 { --n: 18; animation-delay: 12s; }
+.type--4 { --n: 30; animation-delay: 18s; }
+.type--1::after { animation-delay: 0s; }
+.type--2::after { animation-delay: 6s; }
+.type--3::after { animation-delay: 12s; }
+.type--4::after { animation-delay: 18s; }
+@keyframes type-reveal {
+  0%    { opacity: 1; clip-path: inset(-10% 100% -10% 0); animation-timing-function: steps(var(--n), end); } /* start typing */
+  9%    { opacity: 1; clip-path: inset(-10% 0 -10% 0); }                                                    /* fully typed  */
+  21%   { opacity: 1; clip-path: inset(-10% 0 -10% 0); animation-timing-function: steps(var(--n), end); } /* hold, then erase */
+  24%   { opacity: 1; clip-path: inset(-10% 100% -10% 0); }                                                 /* erased */
+  24.1%, 100% { opacity: 0; clip-path: inset(-10% 100% -10% 0); }                                          /* wait for next turn */
+}
+@keyframes type-caret {
+  0%    { left: 0; animation-timing-function: steps(var(--n), end); }
+  9%    { left: calc(100% - 3px); }
+  21%   { left: calc(100% - 3px); animation-timing-function: steps(var(--n), end); }
+  24%   { left: 0; }
+  100%  { left: 0; }
+}
+/* END 5. HERO */
+
+
+/* =====================================================================
+   6. ABOUT
+   White section. Contains: page-curl, tab bar, and three panels.
+   ===================================================================== */
+.about { background: #fff; padding-bottom: 90px; }
+
+/* Orange page-curl in the top-left corner (two clipped shapes) */
+.curl { position: absolute; left: 0; top: 0; width: 230px; height: 250px; pointer-events: none; }
+.curl__back { position: absolute; left: 0; top: 0; width: 150px; height: 150px; background: linear-gradient(135deg, #d96d20, var(--orange)); clip-path: polygon(0 0, 100% 0, 0 100%); }
+.curl__flap { position: absolute; left: 0; top: 30px; width: 190px; height: 120px; background: linear-gradient(160deg, #fdfdfd 20%, #cfcfcf 70%, #9b9b9b); clip-path: polygon(0 0, 60% 0, 100% 60%, 70% 100%, 0 100%); filter: drop-shadow(18px 22px 16px rgba(0, 0, 0, 0.5)); }
+
+.about__wrap { max-width: 1360px; margin: 70px auto 0; padding: 0 8%; }
+
+/* ---- Tabs (radio-button trick) ----
+   The radios are invisible but still work with the keyboard. */
+.tab-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tabs { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); height: 68px; border-radius: 40px; background: #f7f4f2; box-shadow: 0 10px 28px rgba(29, 20, 15, 0.14); }
+.tab-input:focus-visible ~ .tabs { outline: 3px solid var(--orange); outline-offset: 4px; }
+/* The orange pill that slides behind the active tab */
+.tabs__pill { position: absolute; top: 0; left: 0; bottom: 0; width: 33.3333%; border-radius: 40px; background: linear-gradient(180deg, var(--orange), #e8700f); box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.12); transition: transform 0.35s cubic-bezier(0.5, 0, 0.2, 1); }
+.tabs__btn { position: relative; z-index: 1; display: grid; place-items: center; font-size: 15px; color: var(--ink); cursor: pointer; user-select: none; transition: color 0.25s ease; }
+
+/* Move the pill + whiten the text for whichever radio is ticked */
+#tab-skills:checked ~ .tabs .tabs__pill { transform: translateX(100%); }
+#tab-education:checked ~ .tabs .tabs__pill { transform: translateX(200%); }
+#tab-about:checked ~ .tabs .tabs__btn--about,
+#tab-skills:checked ~ .tabs .tabs__btn--skills,
+#tab-education:checked ~ .tabs .tabs__btn--education { color: #fff; }
+
+/* Panels: hidden by default, only the ticked one is shown */
+.panel { display: none; margin-top: 44px; min-height: 420px; animation: panel-in 0.35s ease; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(8px); } }
+#tab-about:checked ~ .panel--about,
+#tab-skills:checked ~ .panel--skills,
+#tab-education:checked ~ .panel--education { display: block; }
+
+/* Panel 1: profile */
+.bio { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.bio__photo { width: 250px; height: 250px; border-radius: 50%; overflow: hidden; border: 6px solid #fff; box-shadow: 0 14px 34px rgba(29, 20, 15, 0.3); background: #eee; }
+.bio__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }  /* keeps the face centred */
+.bio__name { margin-top: 48px; font-size: 26px; color: var(--ink); }
+.bio__title { font-size: 19px; color: var(--muted); }
+.bio__text { max-width: 980px; margin-top: 22px; font-size: 17px; line-height: 1.95; color: #77695f; }
+
+/* Panel 2: skills (logo cards) */
+.skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1240px; margin: 30px auto 0; }
+.skill { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 14px; background: #f5f2ef; box-shadow: 0 4px 14px rgba(29, 20, 15, 0.07); transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
+.skill:hover { transform: translateY(-4px); background: #fff; box-shadow: 0 14px 28px rgba(29, 20, 15, 0.16); }
+.skill__logo { flex: none; width: 56px; height: 56px; border-radius: 12px; object-fit: contain; }   /* SVG = crisp at any resolution (4K, retina) */
+.skill__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.skill__name { font-size: 16px; color: var(--ink); }
+.skill__sub { font-size: 13px; color: var(--muted); }
+
+/* Panel 3: education timeline (centre line with the entry on its left) */
+.edu { position: relative; display: flex; flex-direction: column; align-items: center; padding-bottom: 10px; margin-top: 10px; }
+.edu__cap { width: 52px; height: 52px; fill: var(--ink); stroke: none; }
+.edu__plane { width: 30px; height: 30px; margin-top: 26px; fill: #000; stroke: none; }
+.edu__line { position: absolute; top: 118px; bottom: 0; left: 50%; border-left: 2px dotted #000; }
+.edu__item { position: relative; align-self: flex-start; width: calc(50% - 24px); margin-top: 14px; padding-bottom: 20px; text-align: right; }
+.edu__dot { position: absolute; right: -35px; top: 14px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); }
+.edu__degree { font-size: 22px; line-height: 1.35; color: var(--ink); }
+.edu__school { margin-top: 10px; font-size: 17px; color: var(--orange); }
+.edu__years { margin-top: 4px; font-size: 17px; color: #8a7f77; }
+
+/* Panel 3: process */
+.process { max-width: 860px; margin: 56px auto 0; padding-top: 40px; border-top: 1px solid #ece6e1; text-align: center; }
+.process__title { font-size: clamp(22px, 2.6vw, 34px); line-height: 1.3; color: var(--ink); }
+.process__text { margin-top: 22px; font-size: 17px; line-height: 1.95; color: #77695f; }
+/* END 6. ABOUT */
+
+
+/* =====================================================================
+   7. STATEMENT BANNER
+   background-attachment: fixed makes the picture stay still while the
+   page scrolls past it (parallax).
+   ===================================================================== */
+.banner { min-height: 60vh; display: grid; place-items: center; background: #0b0806; color: #fff; text-align: center; }
+.banner__bg { position: absolute; inset: 0; background: linear-gradient(rgba(10, 6, 3, 0.62), rgba(10, 6, 3, 0.72)), url("assets/cinematic-portrait.webp") 30% center / cover fixed; }
+.banner__text { position: relative; max-width: 820px; padding: 80px 24px; }
+.banner__quote { font-size: clamp(26px, 3.4vw, 50px); line-height: 1.3; }
+.banner__author { margin-top: 30px; font-size: clamp(16px, 1.8vw, 24px); font-style: italic; color: var(--orange); }
+/* END 7. STATEMENT BANNER */
+
+
+/* =====================================================================
+   8. RESUME
+   Dark section, three white cards that tilt on hover.
+   ===================================================================== */
+.resume { padding-bottom: 110px; color: #fff; background: radial-gradient(ellipse 50% 55% at 55% 40%, #4a3a30 0%, transparent 70%), linear-gradient(180deg, #1d140f, #2c211a 60%, #1d140f); }
+.resume .section-title__icon { color: #c9b8ab; }
+.resume .section-title__text { color: #fff; }
+.resume .section-title__ghost { color: rgba(255, 255, 255, 0.08); }
+.resume .section-title__sub { color: #b3a498; }
+
+/* Professional summary box */
+.summary { max-width: 1100px; margin: 60px auto 0; padding: 30px 36px; border: 1px solid rgba(255, 125, 43, 0.3); border-radius: 22px; background: rgba(18, 13, 10, 0.55); }
+.summary__title { font-size: 20px; color: var(--orange); }
+.summary__text { margin-top: 14px; font-size: 15px; line-height: 1.9; color: rgba(255, 243, 234, 0.85); }
+
+/* Experience cards: 2 x 2 */
+.cards { max-width: 1260px; margin: 50px auto 0; padding: 0 5%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; perspective: 900px; }
+.card { background: #fff; color: var(--ink); text-align: left; padding: 34px 30px; min-height: 300px; border: 1px solid rgba(255, 125, 43, 0.5); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.card:hover,
+.card:focus-visible { transform: rotateY(-12deg) skewY(2deg); box-shadow: 0 18px 38px rgba(0, 0, 0, 0.5); }
+.card__date { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); }
+.card__title { margin-top: 14px; font-size: 22px; line-height: 1.3; }
+.card__org { margin-top: 6px; font-size: 15px; color: var(--muted); }
+.card__text { margin-top: 16px; font-size: 14px; line-height: 1.75; color: #77695f; }
+.card__list { margin: 14px 0 0; padding: 0 0 0 18px; }
+.card__li { margin-top: 8px; font-size: 14px; line-height: 1.7; color: #5d5047; list-style: disc; }
+.card__li::marker { color: var(--orange); }
+
+/* Strengths chips */
+.strengths { max-width: 1100px; margin: 60px auto 0; padding: 0 5%; text-align: center; }
+.strengths__title { font-size: 22px; }
+.strengths__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 22px; }
+.strength { padding: 14px 22px; border: 1px solid rgba(255, 125, 43, 0.5); border-radius: 999px; background: rgba(255, 125, 43, 0.08); font-size: 14px; }
+
+/* Teamwork + Creativity */
+.values { max-width: 1100px; margin: 40px auto 0; padding: 0 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.value { padding: 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border-left: 4px solid var(--orange); }
+.value__title { font-size: 19px; color: var(--orange); }
+.value__text { margin-top: 12px; font-size: 14px; line-height: 1.85; color: rgba(255, 243, 234, 0.82); }
+
+.references { margin-top: 40px; text-align: center; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: #b3a498; }
+/* END 8. RESUME */
+
+
+/* =====================================================================
+   9. PORTFOLIO
+   Each .work shows a photo + caption. On hover: the photo zooms and the
+   orange .work__hover panel slides in from the left.
+   ===================================================================== */
+.portfolio { background: #fff; padding-bottom: 100px; }
+.works { max-width: 1360px; margin: 70px auto 0; padding: 0 5.7%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.work { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 10px; background: var(--bar); box-shadow: 0 12px 30px rgba(29, 20, 15, 0.18); }
+.work__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.work:hover .work__img { transform: scale(1.08); }
+
+/* Caption always visible at the bottom */
+.work__label { position: absolute; inset: auto 0 0 0; padding: 60px 24px 22px; color: #fff; background: linear-gradient(to top, rgba(10, 6, 3, 0.88), transparent); }
+.work__type { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); }
+.work__name { margin-top: 6px; font-size: clamp(18px, 1.9vw, 26px); }
+
+/* Sliding panel on hover (starts off-screen to the left and invisible) */
+.work__hover { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; color: #1a100a; background: linear-gradient(135deg, var(--amber), var(--orange)); transform: translateX(-102%); opacity: 0; visibility: hidden; transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1), opacity 0s linear 0.45s, visibility 0s linear 0.45s; }
+.work__hover .work__type { color: #1a100a; }
+.work__hover .work__name { font-size: clamp(22px, 2.4vw, 34px); }
+.work:hover .work__hover,
+.work:focus-visible .work__hover { transform: none; opacity: 1; visibility: visible; transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1), opacity 0s, visibility 0s; }
+/* END 9. PORTFOLIO */
+
+
+/* =====================================================================
+   10. CONTACT
+   Dark section. The SVG network (.net) is stretched behind the content.
+   ===================================================================== */
+.contact { color: #fff; background: var(--bar); padding-bottom: 100px; }
+.contact .section-title__icon { color: #c9b8ab; }
+.contact .section-title__text { color: #fff; }
+.contact .section-title__ghost { color: rgba(255, 255, 255, 0.08); }
+.contact .section-title__sub { color: #b3a498; }
+.contact__inner { position: relative; max-width: 1280px; margin: 0 auto; padding: 0 5%; }
+
+/* Animated node network: lines are orange, dots are grey and softly pulse */
+.net { position: absolute; inset: 0; width: 100%; height: 100%; }
+.net__lines line { stroke: var(--orange); stroke-opacity: 0.35; stroke-width: 1.3; transition: stroke-opacity 0.4s ease; }
+.net__dots circle { fill: rgba(200, 190, 180, 0.7); }
+.net__lines, .net__dots { animation: net-drift 26s ease-in-out infinite alternate; }
+.net__dots circle:nth-child(3n) { animation: net-pulse 5s ease-in-out infinite alternate; }
+.net__dots circle:nth-child(4n) { animation: net-pulse 7s ease-in-out infinite alternate-reverse; }
+.contact:hover .net__lines line { stroke-opacity: 0.8; }   /* network lights up when the section is hovered */
+@keyframes net-drift { from { transform: translate(-16px, 12px); } to { transform: translate(18px, -14px); } }
+@keyframes net-pulse { from { opacity: 0.45; } to { opacity: 1; } }
+
+/* Two columns: details | form */
+.contact__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 50px; margin-top: 60px; align-items: start; }
+.contact__text { font-size: 16px; line-height: 1.9; color: rgba(255, 243, 234, 0.8); margin-bottom: 26px; }
+.detail { display: flex; align-items: center; gap: 14px; padding: 12px 0; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; }
+.detail .svg { flex: none; width: 26px; height: 26px; color: var(--orange); }
+a.detail__text:hover { color: var(--orange); }
+
+/* Form */
+.form { display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid rgba(255, 125, 43, 0.3); border-radius: 24px; background: rgba(18, 13, 10, 0.72); backdrop-filter: blur(6px); }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form__field { width: 100%; padding: 16px 18px; border: 1px solid rgba(255, 243, 234, 0.18); border-radius: 14px; background: rgba(255, 255, 255, 0.04); color: #fff; font: inherit; font-size: 15px; outline: none; transition: border-color 0.25s ease; }
+.form__field::placeholder { color: rgba(255, 243, 234, 0.5); }
+.form__field:focus { border-color: var(--orange); }
+.form__field--area { min-height: 160px; resize: vertical; }
+.form__button { align-self: flex-start; padding: 16px 28px; border: 0; border-radius: 999px; background: linear-gradient(135deg, var(--amber), var(--orange)); color: #1a100a; font: inherit; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 28px rgba(255, 125, 43, 0.28); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.form__button:hover { transform: translateY(-2px); box-shadow: 0 18px 30px rgba(255, 125, 43, 0.4); }
+/* END 10. CONTACT */
+
+
+/* =====================================================================
+   11. SITE FOOTER (TONTON-style closing section)
+   Everything is centred in one column on a very dark background.
+   ===================================================================== */
+.footer { display: flex; flex-direction: column; align-items: center; padding: 64px 20px 44px; text-align: center; color: #fff; background: radial-gradient(ellipse 70% 80% at 50% 0%, #1d140f 0%, #0b0806 70%); border-top: 1px solid rgba(255, 125, 43, 0.25); }
+.footer__logo { width: 130px; height: auto; filter: drop-shadow(0 0 18px rgba(255, 125, 43, 0.35)); }
+.footer__name { margin-top: 14px; font-size: clamp(24px, 3.2vw, 38px); letter-spacing: 0.08em; text-transform: uppercase; }
+.footer__tag { margin-top: 8px; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255, 243, 234, 0.7); }
+.footer__thanks { max-width: 640px; margin-top: 44px; font-size: clamp(16px, 1.7vw, 22px); line-height: 1.65; color: #cfc4ba; }
+
+/* Quick links */
+.footer__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 38px; margin-top: 44px; }
+.footer__link { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: #a99d93; transition: color 0.25s ease; }
+.footer__link:hover { color: var(--orange); }
+
+/* Round social buttons */
+.footer__social { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin-top: 44px; }
+.social { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; color: #fff; background: rgba(255, 243, 234, 0.05); border: 1px solid rgba(255, 243, 234, 0.12); cursor: pointer; transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.social__icon { width: 30px; height: 30px; fill: currentColor; }
+.social:hover { transform: translateY(-4px); color: #1a100a; background: var(--orange); border-color: var(--orange); }
+
+/* Divider + copyright */
+.footer__rule { width: min(576px, 90%); height: 1px; margin-top: 52px; background: rgba(255, 243, 234, 0.15); }
+.footer__copy { margin-top: 20px; font-size: 14px; letter-spacing: 0.03em; color: #a99d93; }
+.footer__copy + .footer__copy { margin-top: 10px; }
+.footer__credit { color: var(--orange); }
+/* END 11. SITE FOOTER */
+
+
+/* =====================================================================
+   12. SCROLL EFFECTS & RESPONSIVE
+   ===================================================================== */
+
+/* ---- 12a. Scroll-driven effects (CSS only; Chrome/Edge 115+, Safari 26+) ----
+   Each section gets a named "view timeline". The matching menu link is
+   painted orange while that section is in the middle of the screen.   */
+body { timeline-scope: --t-home, --t-about, --t-resume, --t-portfolio, --t-contact; }
+#home      { view-timeline: --t-home block; }
+#about     { view-timeline: --t-about block; }
+#resume    { view-timeline: --t-resume block; }
+#portfolio { view-timeline: --t-portfolio block; }
+#contact   { view-timeline: --t-contact block; }
+@keyframes link-on { from, to { color: var(--orange); } }
+@keyframes bar-solid { to { background: var(--bar); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); } }
+
+@supports (animation-timeline: view()) {
+  /* Top bar starts transparent and turns solid over the first 90px of scroll */
+  .topbar { background: transparent; animation: bar-solid linear both; animation-timeline: scroll(root); animation-range: 0 90px; }
+  .menu-check:checked ~ .menu { background: var(--bar); }
+  /* Menu highlight */
+  .menu__link { animation: link-on linear; animation-fill-mode: none; animation-range: cover 25% cover 75%; }
+  .menu__link--home      { animation-timeline: --t-home; }
+  .menu__link--about     { animation-timeline: --t-about; }
+  .menu__link--resume    { animation-timeline: --t-resume; }
+  .menu__link--portfolio { animation-timeline: --t-portfolio; }
+  .menu__link--contact   { animation-timeline: --t-contact; }
+}
+
+/* Browsers without scroll-driven animation: highlight the link you clicked */
+@supports not (animation-timeline: view()) {
+  body:not(:has(:target)) .menu__link--home,
+  body:has(#about:target) .menu__link--about,
+  body:has(#resume:target) .menu__link--resume,
+  body:has(#portfolio:target) .menu__link--portfolio,
+  body:has(#contact:target) .menu__link--contact { color: var(--orange); }
+}
+
+/* ---- 12b. Respect "reduce motion" system setting ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero__photo, .hero__rays, .net__lines, .net__dots, .net__dots circle { animation: none; }
+  .type { animation: none; }
+  .type::after { display: none; }
+  .type--1 { opacity: 1; clip-path: none; }
+}
+
+/* ---- 12c. Tablet (up to 1100px) ---- */
+@media (max-width: 1100px) {
+  .menu { gap: 28px; }
+  .menu__link { font-size: 15px; }
+  .hero__content { width: min(560px, 52%); }
+}
+
+/* ---- 12d. Small tablet / phone landscape (up to 860px) ---- */
+@media (max-width: 860px) {
+  :root { --bar-height: 66px; }
+  .brand__name { font-size: 12px; }
+  .brand__logo { height: 42px; }
+
+  /* Burger menu: links hide until the checkbox is ticked */
+  .menu-button { display: block; }
+  .menu { position: absolute; top: var(--bar-height); left: 0; right: 0; display: none; flex-direction: column; gap: 0; padding: 6px 6% 16px; background: var(--bar); }
+  .menu-check:checked ~ .menu { display: flex; }
+  .menu__link { padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+  /* ---- Mobile hero: show the WHOLE cinematic photo ----
+     The photo is a wide landscape picture (2352 x 1008). On a tall phone screen
+     "cover" would crop it to a thin slice, so instead the photo keeps its real
+     proportions: full width, sitting just under the top bar. The text then
+     flows below it on the same dark background.
+     (100vw * 1008 / 2352 = the exact height of the photo at full width.)   */
+  .hero { min-height: 0; padding: calc(var(--bar-height) + 100vw * 1008 / 2352 + 20px) 0 48px; }   /* top padding = bar + photo height, so the text starts right under the photo */
+  .hero__photo { inset: var(--bar-height) 0 auto 0; width: 100%; height: calc(100vw * 1008 / 2352); object-fit: cover; object-position: center; animation: none; }   /* no zoom: zoom would crop the edges */
+  .hero__rays { height: calc(var(--bar-height) + 100vw * 1008 / 2352); }
+  /* soft fade at the photo's bottom edge so it melts into the dark page */
+  .hero__shade { background: linear-gradient(to bottom, rgba(11, 8, 6, 0.55) 0, rgba(11, 8, 6, 0) var(--bar-height), rgba(11, 8, 6, 0) calc(var(--bar-height) + 100vw * 1008 / 2352 - 12vw), #0b0806 calc(var(--bar-height) + 100vw * 1008 / 2352 + 1px)); }
+  /* text block now follows the photo instead of floating over it */
+  .hero__content { position: relative; top: auto; bottom: auto; left: auto; right: auto; width: auto; transform: none; margin: 0 6%; text-align: center; }
+  .hero__desc { margin: 0 auto; }
+  .typer { justify-items: center; }
+  .hero__button { min-width: 0; width: min(320px, 100%); height: 56px; }
+
+  .skills { grid-template-columns: 1fr 1fr; }
+  .cards, .values { grid-template-columns: 1fr; }
+  .contact__grid { grid-template-columns: 1fr; gap: 36px; }
+  .banner__bg { background-attachment: scroll; }   /* fixed backgrounds are unreliable on phones */
+}
+
+/* ---- 12e. Phone (up to 560px) ---- */
+@media (max-width: 560px) {
+  .brand__role { display: none; }
+  .about__wrap { padding: 0 16px; }
+  .tabs { height: 54px; }
+  .tabs__btn { font-size: 12px; }
+  .bio__photo { width: 210px; height: 210px; }
+  .skills, .cards, .works, .form__row { grid-template-columns: 1fr; }
+  .edu__item { width: calc(50% - 16px); }
+  .edu__degree { font-size: 17px; }
+  .summary { margin-left: 16px; margin-right: 16px; padding: 22px 18px; }
+  .cards, .works { padding: 0 16px; }
+  .curl { transform: scale(0.65); transform-origin: top left; }
+  .form { padding: 20px 16px; }
+}
+/* END 12. SCROLL EFFECTS & RESPONSIVE */

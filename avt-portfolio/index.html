@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akolurejo Victor Tobi | Architect &amp; Software Developer</title>
+  <meta name="description" content="Luxury architect and web developer portfolio for a premium personal brand.">
+
+  <!-- Google Fonts: Russo One (body/nav) and Saira Stencil One (big headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;family=Saira+Stencil+One&amp;display=swap" rel="stylesheet">
+
+  <!-- The ONE external stylesheet that styles the whole page -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =====================================================================
+       1. TOP BAR (fixed navigation)
+       Logo + name on the left, page links on the right.
+       The checkbox + label is the CSS-only mobile menu (no JavaScript).
+       ===================================================================== -->
+  <div class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#home">
+        <img class="brand__logo" src="assets/avt-logo.png" alt="AVT logo">
+        <span class="brand__text">
+          <span class="brand__name">Akolurejo Victor Tobi</span>
+          <span class="brand__role">Architect &bull; Software Developer</span>
+        </span>
+      </a>
+
+      <input type="checkbox" id="menuToggle" class="menu-check" aria-label="Toggle menu">
+      <label for="menuToggle" class="menu-button"><svg class="svg" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></label>
+
+      <div class="menu" id="menu">
+        <a class="menu__link menu__link--home" href="#home">Home</a>
+        <a class="menu__link menu__link--about" href="#about">About</a>
+        <a class="menu__link menu__link--resume" href="#resume">Resume</a>
+        <a class="menu__link menu__link--portfolio" href="#portfolio">Portfolio</a>
+        <a class="menu__link menu__link--contact" href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+  <!-- END 1. TOP BAR -->
+
+
+  <!-- =====================================================================
+       2. HERO (Home)
+       Full-screen cinematic portrait with a slow zoom (Ken Burns),
+       light rays, dark overlay and film grain stacked on top of it.
+       The headline types itself in pure CSS, cycling through 4 phrases.
+       ===================================================================== -->
+  <div class="hero" id="home">
+    <img class="hero__photo" src="assets/cinematic-portrait.webp" alt="Cinematic portrait of Akolurejo Victor Tobi">
+    <div class="hero__rays"></div>
+    <div class="hero__shade"></div>
+    <div class="hero__grain"></div>
+
+    <div class="hero__content">
+      <p class="hero__role">Architect &bull; Software Developer</p>
+
+      <!-- Typing headline: each .type is one phrase; CSS shows them one after another -->
+      <h1 class="hero__headline">
+        <span class="typer">
+          <span class="type type--1">Akolurejo Victor Tobi</span>
+          <span class="type type--2">Architect</span>
+          <span class="type type--3">Software Developer</span>
+          <span class="type type--4">Architect &amp; Software Developer</span>
+        </span>
+      </h1>
+
+      <p class="hero__desc">I am an architect and software developer focused on creating refined, functional, and memorable experiences. My work sits at the intersection of design, technology, and human-centered thinking.</p>
+
+      <a class="hero__button" href="#contact">Book a Consultation</a>
+      <p class="hero__place">&bull; Abuja, Port Harcourt, NG. &bull;</p>
+    </div>
+  </div>
+  <!-- END 2. HERO -->
+
+
+  <!-- =====================================================================
+       3. ABOUT
+       White section with an orange page-curl in the corner.
+       Three tabs (About / Skills / Education) built from radio buttons:
+       clicking a label ticks its radio, and CSS (:checked) shows its panel.
+       ===================================================================== -->
+  <div class="about" id="about">
+    <div class="curl"><span class="curl__back"></span><span class="curl__flap"></span></div>
+
+    <div class="section-title">
+        <span class="section-title__icon"><svg class="svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></span>
+        <span class="section-title__line"></span>
+        <div class="section-title__stack">
+          <span class="section-title__ghost">ABOUT ME</span>
+          <h2 class="section-title__text">About me</h2>
+        </div>
+        <p class="section-title__sub">Architectural design, software development and brand consultation.</p>
+      </div>
+
+    <div class="about__wrap">
+      <!-- The 3 hidden radios that remember which tab is open -->
+      <input type="radio" name="about-tab" id="tab-about" class="tab-input" checked>
+      <input type="radio" name="about-tab" id="tab-skills" class="tab-input">
+      <input type="radio" name="about-tab" id="tab-education" class="tab-input">
+
+      <!-- The clickable tab bar -->
+      <div class="tabs">
+        <span class="tabs__pill"></span>
+        <label class="tabs__btn tabs__btn--about" for="tab-about">ABOUT</label>
+        <label class="tabs__btn tabs__btn--skills" for="tab-skills">SKILLS</label>
+        <label class="tabs__btn tabs__btn--education" for="tab-education">EDUCATION</label>
+      </div>
+
+      <!-- Panel 1: profile photo + introduction -->
+      <div class="panel panel--about">
+        <div class="bio">
+          <div class="bio__photo">
+            <img src="assets/professional_portrait.png" alt="Akolurejo Victor Tobi in a Bilaad Realty hard hat and safety vest">
+          </div>
+          <h3 class="bio__name">Akolurejo Victor Tobi <span class="bio__title">- Architect &amp; Software Developer</span></h3>
+          <p class="bio__text">I am an architect and software developer focused on creating refined, functional, and memorable experiences. My work sits at the intersection of design, technology, and human-centered thinking&mdash;whether I am shaping a luxury space or building an elegant digital presence for a brand.</p>
+        </div>
+      </div>
+
+      <!-- Panel 2: skills. Each card = logo (vector SVG, sharp at any size) + name + short description -->
+      <div class="panel panel--skills">
+        <div class="skills">
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/architecture.svg" alt="Architectural Design logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Architectural Design</span><span class="skill__sub">Spatial Planning</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/software.svg" alt="Software Development logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Software Development</span><span class="skill__sub">Applications &amp; Systems</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/3d.svg" alt="3D Visualization logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">3D Visualization</span><span class="skill__sub">Revit &amp; SketchUp</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/uiux.svg" alt="UI/UX Design logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">UI/UX Design</span><span class="skill__sub">Interfaces &amp; Experience</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/web.svg" alt="Web Development logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Web Development</span><span class="skill__sub">Websites &amp; Platforms</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/brand.svg" alt="Brand Consultation logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Brand Consultation</span><span class="skill__sub">Identity &amp; Strategy</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/html-css.svg" alt="HTML &amp; CSS logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">HTML &amp; CSS</span><span class="skill__sub">Web Foundation</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/javascript.svg" alt="JavaScript logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">JavaScript</span><span class="skill__sub">Web Development</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/react.svg" alt="React logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">React</span><span class="skill__sub">Frontend Development</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/canva.svg" alt="Canva logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Canva</span><span class="skill__sub">Design Software</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/tailwindcss.svg" alt="Tailwind CSS logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Tailwind CSS</span><span class="skill__sub">Styling Framework</span></div>
+          </div>
+          <div class="skill">
+            <img class="skill__logo" src="assets/skills/python.svg" alt="Python logo" width="128" height="128" loading="lazy">
+            <div class="skill__text"><span class="skill__name">Python</span><span class="skill__sub">Backend / Scripting</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: education timeline (from the CV) followed by the working-process statement -->
+      <div class="panel panel--education">
+        <div class="edu">
+          <svg class="edu__cap svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-6 9.2v4L12 20l6-3.8v-4L12 15.5 6 12.2z"/></svg>
+          <svg class="edu__plane svg" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <div class="edu__item">
+            <span class="edu__dot"></span>
+            <h3 class="edu__degree">Bachelors Degree in Architecture</h3>
+            <p class="edu__school">Joseph Ayo Babalola University - Osun, Nigeria</p>
+            <p class="edu__years">2020 &ndash; 2024</p>
+          </div>
+          <span class="edu__line"></span>
+        </div>
+
+        <!-- Process statement kept from the original portfolio -->
+        <div class="process">
+          <h3 class="process__title">Designing spaces and experiences with intention.</h3>
+          <p class="process__text">My process blends architectural clarity, modern aesthetics, and strategic digital craftsmanship. Every project is designed to feel timeless, premium, and powerfully aligned with the vision of the client.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END 3. ABOUT -->
+
+
+  <!-- =====================================================================
+       4. STATEMENT BANNER
+       Parallax strip (the background stays fixed while the page scrolls).
+       Re-uses the cinematic portrait with a dark overlay and one statement.
+       ===================================================================== -->
+  <div class="banner">
+    <div class="banner__bg"></div>
+    <div class="banner__text">
+      <p class="banner__quote">&ldquo;Great minds don't just imagine possibilities; they design and code them into reality.&rdquo;</p>
+      <p class="banner__author">&ndash; Akolurejo Victor Tobi</p>
+    </div>
+  </div>
+  <!-- END 4. STATEMENT BANNER -->
+
+
+  <!-- =====================================================================
+       5. RESUME
+       Dark section built from the CV: summary, 4 experience cards (tilt on hover),
+       strengths, teamwork and creativity statements, references.
+       ===================================================================== -->
+  <div class="resume" id="resume">
+    <div class="section-title">
+        <span class="section-title__icon"><svg class="svg" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M2 13h20"/></svg></span>
+        <span class="section-title__line"></span>
+        <div class="section-title__stack">
+          <span class="section-title__ghost">MY RESUME</span>
+          <h2 class="section-title__text">My Resume</h2>
+        </div>
+        <p class="section-title__sub">Experience built on precision, craftsmanship, and vision.</p>
+      </div>
+
+    <!-- Professional summary (from the CV) -->
+    <div class="summary">
+      <h3 class="summary__title">Professional Summary</h3>
+      <p class="summary__text">Results-driven and adaptable professional with strong experience in project coordination, operations support, site supervision, documentation, and team leadership. Proven ability to work in fast-paced environments, manage multiple responsibilities, and deliver quality outcomes under pressure. Highly skilled in communication, problem-solving, digital tools, and collaborative work across multidisciplinary teams. Open to opportunities across corporate, operations, administration, project management, real estate, and service-based roles.</p>
+    </div>
+
+    <!-- Professional experience: 4 cards, newest first -->
+    <div class="cards">
+      <div class="card" tabindex="0">
+        <p class="card__date">January 2025 &ndash; December 2025</p>
+        <h3 class="card__title">Site Architect (NYSC)</h3>
+        <p class="card__org">Bilaad Realty, Abuja</p>
+        <p class="card__text">Supervised daily construction activities across residential and mixed-use projects, ensuring compliance with drawings, specifications, and safety standards.</p>
+        <ul class="card__list"><li class="card__li">Coordinated artisans, subcontractors, and site workers to achieve project milestones within deadlines, and interpreted architectural drawings to provide on-site technical solutions to construction challenges.</li><li class="card__li">Conducted quality inspections, snagging, and progress reporting to consultants and management.</li><li class="card__li">Verified materials, measurements, and site deliveries to minimize waste and control costs.</li></ul>
+      </div>
+
+      <div class="card" tabindex="0">
+        <p class="card__date">July 2023 &ndash; December 2023</p>
+        <h3 class="card__title">Assistant Architect</h3>
+        <p class="card__org">Citec International Estates, Abuja, Nigeria</p>
+        <p class="card__text">Worked on several significant projects, contributing to various stages of the architectural process.</p>
+        <ul class="card__list"><li class="card__li">Assisted in design process and development, resulting in innovative proposals for two major clients.</li><li class="card__li">Conducted site analysis for several project locations, providing detailed reports with feasible design solutions.</li><li class="card__li">Collaborated in creating 3D architectural designs using Revit and SketchUp for three different projects.</li></ul>
+      </div>
+
+      <div class="card" tabindex="0">
+        <p class="card__date">July 2022 &ndash; November 2022</p>
+        <h3 class="card__title">Assistant Junior Architect</h3>
+        <p class="card__org">Seralin International Ltd, Port Harcourt</p>
+        <p class="card__text">Involved in a number of high-profile projects, assisting in various stages of design and planning.</p>
+        <ul class="card__list"><li class="card__li">Assisted in a residential building project from concept to completion, supporting design and construction phases.</li><li class="card__li">Worked closely with a senior architect to develop preliminary sketches for a commercial building project.</li><li class="card__li">Participated in client meetings and site visits, aiding in the communication and execution of design concepts.</li></ul>
+      </div>
+
+      <div class="card" tabindex="0">
+        <p class="card__date">September 2021 &ndash; November 2021</p>
+        <h3 class="card__title">Graphics Editor</h3>
+        <p class="card__org">Anfield Homes, Abuja</p>
+        <p class="card__text">Worked with colleagues to optimize visual presentation standards.</p>
+        <ul class="card__list"><li class="card__li">Streamlined design processes for increased efficiency and improved project completion rates.</li><li class="card__li">Worked with the team to meet project deadlines and complete changes.</li></ul>
+      </div>
+
+    </div>
+
+    <!-- Strengths (from the CV) -->
+    <div class="strengths">
+      <h3 class="strengths__title">Strengths</h3>
+      <div class="strengths__list">
+        <span class="strength">&#10003; Strong communicator</span>
+        <span class="strength">&#10003; Fast learner</span>
+        <span class="strength">&#10003; Highly organized and team-oriented</span>
+        <span class="strength">&#10003; Adaptable across industries</span>
+      </div>
+    </div>
+
+    <!-- Teamwork + Creativity statements (from the CV) -->
+    <div class="values">
+      <div class="value">
+        <h3 class="value__title">Teamwork</h3>
+        <p class="value__text">I thrive in a collaborative environment, valuing diverse perspectives to achieve the best results and communicating effectively to ensure the overall success of the team.</p>
+      </div>
+      <div class="value">
+        <h3 class="value__title">Creativity</h3>
+        <p class="value__text">My innovative architectural design for a residential project at Citec International Ltd was recognized as highly creative.</p>
+      </div>
+    </div>
+
+    <p class="references">References: Available upon request.</p>
+  </div>
+  <!-- END 5. RESUME -->
+
+
+  <!-- =====================================================================
+       6. PORTFOLIO
+       White section, 2 x 2 grid of projects.
+       On hover the image zooms and an orange panel slides in.
+       ===================================================================== -->
+  <div class="portfolio" id="portfolio">
+    <div class="section-title">
+        <span class="section-title__icon"><svg class="svg" viewBox="0 0 24 24"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
+        <span class="section-title__line"></span>
+        <div class="section-title__stack">
+          <span class="section-title__ghost">MY PORTFOLIO</span>
+          <h2 class="section-title__text">My Portfolio</h2>
+        </div>
+        <p class="section-title__sub">Selected work shaped for impact and elegance.</p>
+      </div>
+
+    <div class="works">
+      <div class="work" tabindex="0">
+        <img class="work__img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Coastal Villa Concept" loading="lazy">
+        <div class="work__label"><span class="work__type">Residential Architecture</span><h3 class="work__name">Coastal Villa Concept</h3></div>
+        <div class="work__hover"><span class="work__type">Residential Architecture</span><h3 class="work__name">Coastal Villa Concept</h3></div>
+      </div>
+
+      <div class="work" tabindex="0">
+        <img class="work__img" src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Maison Atelier" loading="lazy">
+        <div class="work__label"><span class="work__type">Brand Experience</span><h3 class="work__name">Maison Atelier</h3></div>
+        <div class="work__hover"><span class="work__type">Brand Experience</span><h3 class="work__name">Maison Atelier</h3></div>
+      </div>
+
+      <div class="work" tabindex="0">
+        <img class="work__img" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Heritage Workspace" loading="lazy">
+        <div class="work__label"><span class="work__type">Commercial Design</span><h3 class="work__name">Heritage Workspace</h3></div>
+        <div class="work__hover"><span class="work__type">Commercial Design</span><h3 class="work__name">Heritage Workspace</h3></div>
+      </div>
+
+      <div class="work" tabindex="0">
+        <img class="work__img" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Luxury Property Platform" loading="lazy">
+        <div class="work__label"><span class="work__type">Digital Experience</span><h3 class="work__name">Luxury Property Platform</h3></div>
+        <div class="work__hover"><span class="work__type">Digital Experience</span><h3 class="work__name">Luxury Property Platform</h3></div>
+      </div>
+    </div>
+  </div>
+  <!-- END 6. PORTFOLIO -->
+
+
+  <!-- =====================================================================
+       7. CONTACT
+       Dark section with an animated node network (SVG) behind the content,
+       contact details on the left and an enquiry form on the right.
+       The form opens the visitor's email app addressed to you (no JavaScript
+       or server needed).
+       ===================================================================== -->
+  <div class="contact" id="contact">
+    <svg class="net" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+        <g class="net__lines"><line x1="337" y1="428" x2="427" y2="689"/><line x1="856" y1="650" x2="981" y2="863"/><line x1="856" y1="650" x2="972" y2="827"/><line x1="856" y1="650" x2="673" y2="553"/><line x1="981" y1="863" x2="972" y2="827"/><line x1="375" y1="517" x2="427" y2="689"/><line x1="483" y1="807" x2="255" y2="828"/><line x1="483" y1="807" x2="427" y2="689"/><line x1="876" y1="70" x2="928" y2="164"/><line x1="876" y1="70" x2="992" y2="154"/><line x1="1538" y1="237" x2="1421" y2="43"/><line x1="1538" y1="237" x2="1421" y2="118"/><line x1="1538" y1="237" x2="1362" y2="38"/><line x1="1512" y1="789" x2="1517" y2="837"/><line x1="1512" y1="789" x2="1545" y2="781"/><line x1="1261" y1="452" x2="1491" y2="351"/><line x1="673" y1="553" x2="427" y2="689"/><line x1="1421" y1="118" x2="1491" y2="351"/><line x1="1421" y1="118" x2="1362" y2="38"/><line x1="754" y1="23" x2="992" y2="154"/><line x1="754" y1="23" x2="481" y2="76"/><line x1="1517" y1="837" x2="1545" y2="781"/><line x1="928" y1="164" x2="992" y2="154"/></g>
+        <g class="net__dots"><circle cx="337" cy="428" r="12"/><circle cx="856" cy="650" r="4"/><circle cx="981" cy="863" r="3"/><circle cx="972" cy="827" r="9"/><circle cx="375" cy="517" r="9"/><circle cx="483" cy="807" r="3"/><circle cx="28" cy="379" r="9"/><circle cx="876" cy="70" r="3"/><circle cx="1538" cy="237" r="3"/><circle cx="1421" cy="43" r="5"/><circle cx="1512" cy="789" r="5"/><circle cx="1261" cy="452" r="3"/><circle cx="673" cy="553" r="5"/><circle cx="1421" cy="118" r="12"/><circle cx="754" cy="23" r="3"/><circle cx="1517" cy="837" r="3"/><circle cx="255" cy="828" r="3"/><circle cx="928" cy="164" r="9"/><circle cx="1491" cy="351" r="5"/><circle cx="992" cy="154" r="3"/><circle cx="1362" cy="38" r="5"/><circle cx="481" cy="76" r="3"/><circle cx="427" cy="689" r="12"/><circle cx="1545" cy="781" r="9"/></g>
+      </svg>
+
+    <div class="contact__inner">
+      <div class="section-title">
+        <span class="section-title__icon"><svg class="svg" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg></span>
+        <span class="section-title__line"></span>
+        <div class="section-title__stack">
+          <span class="section-title__ghost">CONTACT ME</span>
+          <h2 class="section-title__text">Contact me</h2>
+        </div>
+        <p class="section-title__sub">Let’s create something exceptional.</p>
+      </div>
+
+      <div class="contact__grid">
+        <!-- Left column: message + details -->
+        <div class="contact__info">
+          <p class="contact__text">Whether it is a premium residential project, a refined digital platform, or a brand experience that needs clarity and presence, I would love to hear about your vision.</p>
+
+          <div class="detail"><svg class="svg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span class="detail__text">Location: Abuja 900108 &bull; Port Harcourt, Nigeria.</span></div>
+          <div class="detail"><svg class="svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><a class="detail__text" href="tel:+2348107934691">Phone: +234 08107934691</a></div>
+          <div class="detail"><svg class="svg" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a class="detail__text" href="mailto:akolurejovictortobi@gmail.com">Email: akolurejovictortobi@gmail.com</a></div>
+        </div>
+
+        <!-- Right column: enquiry form -->
+        <form class="form" action="mailto:akolurejovictortobi@gmail.com" method="post" enctype="text/plain">
+          <div class="form__row">
+            <input class="form__field" type="text" name="Name" placeholder="Your name" aria-label="Your name">
+            <input class="form__field" type="email" name="Email" placeholder="Email address" aria-label="Email address">
+          </div>
+          <input class="form__field" type="text" name="Project type" placeholder="Project type" aria-label="Project type">
+          <textarea class="form__field form__field--area" name="Project details" placeholder="Tell me about your project" aria-label="Project details"></textarea>
+          <button class="form__button" type="submit">Send Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- END 7. CONTACT -->
+
+
+  <!-- =====================================================================
+       8. SITE FOOTER (closing section)
+       Layout: logo + name -> thank-you line -> quick links -> social icons
+       -> divider -> copyright. Same structure as the TONTON reference.
+       HOW TO LINK THE SOCIAL ICONS LATER: on each <a class="social"> add
+       href="https://your-profile-url" target="_blank" rel="noopener noreferrer"
+       ===================================================================== -->
+  <div class="footer">
+    <img class="footer__logo" src="assets/avt-logo.png" alt="AVT logo">
+    <p class="footer__name">Akolurejo Victor Tobi</p>
+    <p class="footer__tag">Architect &bull; Software Developer</p>
+
+    <p class="footer__thanks">Thanks for stopping by! Let&rsquo;s design refined spaces and build elegant digital experiences together.</p>
+
+    <!-- Quick links (same pages as the top bar) -->
+    <div class="footer__links">
+      <a class="footer__link" href="#home">Home</a>
+      <a class="footer__link" href="#about">About</a>
+      <a class="footer__link" href="#resume">Resume</a>
+      <a class="footer__link" href="#portfolio">Portfolio</a>
+      <a class="footer__link" href="#contact">Contact</a>
+    </div>
+
+    <!-- Social icons: no links yet (see the note above) -->
+    <div class="footer__social">
+      <a class="social" aria-label="GitHub" title="GitHub: add your link here (href)"><svg class="social__icon" viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></a>
+      <a class="social" aria-label="X" title="X: add your link here (href)"><svg class="social__icon" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+      <a class="social" aria-label="Facebook" title="Facebook: add your link here (href)"><svg class="social__icon" viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.09 24 12.07Z"/></svg></a>
+      <a class="social" aria-label="Instagram" title="Instagram: add your link here (href)"><svg class="social__icon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/></g><circle cx="17.4" cy="6.6" r="1.25" fill="currentColor"/></svg></a>
+      <a class="social" aria-label="LinkedIn" title="LinkedIn: add your link here (href)"><svg class="social__icon" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11.5H3V9.75Zm6.5 0h3.83v1.57h.06c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.78 2.66 4.78 6.1v5.9h-4v-5.23c0-1.25-.02-2.85-1.74-2.85-1.74 0-2 1.36-2 2.76v5.32h-4V9.75Z"/></svg></a>
+    </div>
+
+    <div class="footer__rule"></div>
+    <p class="footer__copy">&copy; 2026 Akolurejo Victor Tobi&rsquo;s Portfolio. All Rights Reserved.</p>
+    <p class="footer__copy">Designed &amp; Engineered by <span class="footer__credit">Akolurejo Victor Tobi</span></p>
+  </div>
+  <!-- END 8. SITE FOOTER -->
+
+</body>
+</html>
