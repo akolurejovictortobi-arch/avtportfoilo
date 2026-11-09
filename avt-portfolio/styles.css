@@ -344,6 +344,18 @@ img { display: block; max-width: 100%; }
 .work__hover .work__name { font-size: clamp(22px, 2.4vw, 34px); }
 .work:hover .work__hover,
 .work:focus-visible .work__hover { transform: none; opacity: 1; visibility: visible; transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1), opacity 0s, visibility 0s; }
+
+/* ---- Extra details for the Samsung Clone card (description, tags, buttons) ----
+   Only this card uses these classes, so the other three cards stay exactly as they were. */
+.work__desc { max-width: 440px; font-size: 14px; line-height: 1.6; color: #1a100a; }
+.work__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.work__tag { padding: 4px 12px; border: 1px solid rgba(26, 16, 10, 0.55); border-radius: 999px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.work__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 4px; }
+.work__btn { padding: 11px 22px; border: 2px solid #1a100a; border-radius: 999px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #1a100a; transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease; }
+.work__btn--solid { background: #1a100a; color: #fff; }
+.work__btn:hover { background: #fff; border-color: #fff; color: #1a100a; transform: translateY(-2px); }
+.work:has(.work__btn:focus-visible) .work__hover { transform: none; opacity: 1; visibility: visible; transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1), opacity 0s, visibility 0s; }   /* keyboard users can tab to the buttons */
+@media (max-width: 860px) { .work__hover { gap: 8px; padding: 16px; } .work__desc { font-size: 12.5px; line-height: 1.5; } .work__tags { display: none; } .work__btn { padding: 9px 18px; font-size: 11px; } }
 /* END 9. PORTFOLIO */
 
 
